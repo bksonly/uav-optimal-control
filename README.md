@@ -1,1 +1,75 @@
-# uav-optimal-control
+# 泛函之变分法
+
+-----
+
+## 泛函的概念
+泛函谓之函数的函数。举例说明，一条二维曲线的两个端点固定，$y=Y(x)$，映射$Y(\cdot)$不确定，其长度可以表示成：
+
+$I(Y(\cdot))=\int_{x_1}^{x_2} \sqrt{Y(x)'^2+1}  \ dx$
+![](https://notes.sjtu.edu.cn/uploads/upload_7e90f6c3c9c4ecba539a6943e56b2f49.png)
+该曲线长度取决于$x\to y$的映射关系，即自变量为函数称为宗量，因此说泛函是函数的函数。
+
+变分法范畴下的泛函通常是一个积分，通式可以写作：$I(y)=\int F \ dx$
+
+后面的推导我们都会考虑被积函数阶数为2，即 $F$ 是 $y$ 和 $y'$的函数的情况：
+
+$I(y)=\int_{x_1}^{x_2} F(y,y';x) \ dx$
+
+## 变分的概念
+类比微分的定义，宗量的微分即为变分。
+
+泛函$I$在区间$[x_1,x_2]$上的积分取决于函数$y=Y(x)$的选取，我们有理由假设存在一个$y=Y_0(x)$使得 $I$ 取到最小值。
+
+在 $Y_0(x)$ 路径的基础上，我们加上极小的增量，得到一条极其靠近的轨迹
+
+$\widetilde{Y}(x)=Y_0(x)+\epsilon \eta(x)$
+
+其中$\epsilon \ll 1$，$\eta(x)$是一个任意的可微函数，我们可以把它视作定值，改变$\epsilon$ 就可以得到不同的偏离轨迹。在后续的推导中我们不会关心$\eta(x)$ 的具体形式，因为这并不重要。
+
+![](https://notes.sjtu.edu.cn/uploads/upload_f35c316597a55111c47996710bd24cd2.png)
+
+## 泛函的极值
+例子中，当$Y_0(x)$ 确实能使 $I$ 取到极值时，$I(\widetilde{Y})$ 的值都会大于 $I(Y_0)$ ，从而：
+
+$\frac{ \ \partial\widetilde{I}}{\partial  \epsilon}|_{\epsilon=0}=0$
+
+考虑二阶的一般情况，该式应当写为：
+
+$\frac{ \ \partial\widetilde{I}}{\partial  \epsilon}|_{\epsilon=0}=\int_{x_1}^{x_2} \frac{\partial }{\partial \epsilon}F(\widetilde{y},\widetilde{y}';x) \ dx  \ |_{\epsilon=0} \\ 
+=\int_{x_1}^{x_2} \frac{\partial }{\partial \epsilon}F(y_0+\epsilon \eta, \ y'_0 + \epsilon \eta';x) \ dx  \ |_{\epsilon=0}\\ 
+=\int_{x_1}^{x_2} \frac{\partial F}{\partial \widetilde{y}}\frac{\partial \widetilde{y}}{\partial \epsilon} + \frac{\partial F}{\partial \widetilde{y}'}\frac{\partial \widetilde{y}'}{\partial \epsilon}\ dx  \ |_{\epsilon=0} \\
+=\int_{x_1}^{x_2}\frac{\partial F}{\partial \widetilde{y}} \eta \ + \frac{\partial F}{\partial \widetilde{y}'} \eta'\ dx |_{\epsilon=0}$
+
+运用分部积分法：
+$\int_{x_1}^{x_2}\frac{\partial F}{\partial \widetilde{y}'} \eta'\ dx \\
+=\int_{x_1}^{x_2}\frac{\partial F}{\partial \widetilde{y}'} \frac{d \eta}{dx}\ dx\\ 
+=\int_{x_1}^{x_2}\frac{\partial F}{\partial \widetilde{y}'}  d\eta \\
+=\frac{\partial F}{\partial \widetilde{y}'}  (\eta(x_2)-\eta(x_1))-\int_{x_1}^{x_2} \eta \frac{d}{dx} \frac{\partial F}{\partial \widetilde{y}'}dx$
+因为边界条件，所以$\eta(x_1)=\eta(x_2)=0$
+
+所以$\int_{x_1}^{x_2}\frac{\partial F}{\partial \widetilde{y}'} \eta'\ dx=-\int_{x_1}^{x_2} \eta \frac{d}{dx} \frac{\partial F}{\partial \widetilde{y}'}dx$
+
+$\frac{ \ \partial\widetilde{I}}{\partial  \epsilon}|_{\epsilon=0}=\int_{x_1}^{x_2} (\frac{\partial F}{\partial \widetilde{y}} - \frac{d}{dx} \frac{\partial F}{\partial \widetilde{y}'}) \ \eta \ dx|_{\epsilon=0}=0$
+
+由于 $\eta(x)$ 任取，所以:
+
+$\frac{\partial F}{\partial \widetilde{y}} - \frac{d}{dx} \frac{\partial F}{\partial \widetilde{y}'}|_{\epsilon=0}=0$
+
+当$\epsilon \to 0$时，$y' \to y$，则有：
+
+$\frac{\partial F}{\partial y} - \frac{d}{dx} \frac{\partial F}{\partial y'}=0$
+
+上式称为欧拉方程，在两端固定的问题中，通解中的常数由边界条件决定。若泛函有极值，则极值函数必满足欧拉方程。
+
+斯洛克
+
+
+
+
+
+
+
+
+
+
+
